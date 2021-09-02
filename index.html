@@ -1,0 +1,3039 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Kbean Channel | Swayer.tv</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=0.5, shrink-to-fit=no,  user-scalable=no">
+
+	<link rel="stylesheet" href="https://cdn.swyr.tv/common/media/css/glide.core.css">
+	<link rel="stylesheet" href="https://cdn.swyr.tv/common/media/css/glide.theme.css">
+	<link rel="stylesheet" href="https://use.typekit.net/wei1dhe.css">
+	<script src="https://cdn.swyr.tv/common/media/js/gsap.min.js"></script>
+	<script src="https://cdn.swyr.tv/common/media/js/glide.js"></script>
+	<script src="https://cdn.swyr.tv/common/media/js/vibrant.min.js"></script>
+	<script src="https://resources.amazonwebapps.com/v1/latest/Amazon-Web-App-API.min.js"></script>
+
+	<script src="js/jquery.vide.min.js"></script> <!--For the video background-->
+
+	<style type="text/css">
+
+		/* uncomment the line below to visually see all divs rendered with outlines */
+
+		/*div {-webkit-box-shadow:inset 0px 0px 0px 1px rgba(0,0,255,0.7); -moz-box-shadow:inset 0px 0px 0px 1px rgba(0,0,255,0.7); box-shadow:inset 0px 0px 0px 1px rgba(0,0,255,0.7); }*/
+	
+		#debug { position:absolute; top:20px; left:20px; width:400px; height:400px; background-color:rgba(0,0,200,0.7); color:white; z-index:2147483638; padding:20px; display:none; }
+
+		video::-webkit-media-controls-mute-button { display:none; }
+		video::-webkit-media-controls-download-button { display:none; animation-name: }
+		video::-webkit-media-controls-fullscreen-button { display:none; }
+
+		body, html { width:100vw; height:100vh; margin:0px; background-color:rgba(255, 255, 255, 1); overflow:hidden; font-family: sofia-pro, sans-serif; font-size: 1.655vw; font-weight: 400; font-style: normal; color:#44475D; }
+		html { scroll-behavior: smooth; }
+		ul li { list-style: none; display: inline; margin:0 0 0 0; padding:0px; }
+ 
+		#debug_ul li { list-style:circle; display: block; margin:0 0 0 0; padding:0px; }
+
+		*:focus { outline:none; }
+		#loading_screen, #add_screen, #auth_screen, #welcome_screen, #art_screen, #settings_screen, #refresh_screen { display:none; position:absolute; top:0px; left:0px; width:100vw; height:100vh; animation-duration:1s; background-color:rgba(255, 255, 255, 1); }
+
+		ul {  padding-inline-start: 0px; }
+
+		#top_nav_holder { position:absolute; top:3.65vw; left:2.6vw; z-index:300; opacity:0; }
+		.top-nav { font-size:1.563vw; text-transform:uppercase; letter-spacing:0.1vw; color:#44475D; margin:0px; }
+		.top-nav li { margin-right:4.165vw; }
+		.active_nav { font-family: sofia-pro, sans-serif; font-style: normal; }
+
+		#nav_my_collections:focus, #nav_settings:focus, #nav_refresh:focus { color:#f9102c; }
+
+		#slider_main_views { position:absolute; top:0px; left:0px; z-index:9; }
+		.view_my_collections { margin:22.4vw 0 0 2.6vw; }
+
+		#test .glide__slide--active {  }
+
+		.glide__slide { width:100vw; height:100vh;}
+		.glide { position:absolute; z-index:2; left:3vw; width:97vw; }
+
+		/* views */
+		.nav_view { background-color:rgba(0,0,0,0); width:100vw; height:81.5vh; }
+
+		.details_holder { background-color:rgba(0,0,0,0); width:100vw; overflow:hidden; margin:10.4vw 0 0 0; }
+
+		.profile_holder { float:left; margin:0.4vw 0 0 2.6vw; overflow:hidden; }
+		.profile_photo { background-repeat:no-repeat; background-position:top center; background-size:cover; border: 4px solid #3890D3; width:6.6vw; height:6.6vw; border-radius:50%; image-orientation:from-image; }
+
+		.art_holdings_holder { float:left; margin:0 0 0 2.085vw; overflow:hidden; }
+		.art_details_holder { float:right; margin:0 2.6vw 0 0; overflow:hidden; width:100vh; height:9vw; max-height:9vw; }
+		.art_holdings_holder span { font-weight:bold; }
+		.art_holdings_holder { line-height:2.5vw; font-size:1.35vw; }
+
+		.thumb { background-color:rgba(0,0,0,0.1); height:10.1vw; margin-bottom:0; image-orientation: from-image; }
+
+		.button_play_all { padding:0.45vw 0 0 0; width:7vw; height:2.5vw; font-size:1vw; text-align:center; text-transform:uppercase; background-color:#D8D8E6; color:white; margin-right:2.1vw; border-radius:3px; }
+
+		.collection_info_holder { width:97vw; overflow:hidden; margin:4vw 0 0 3vw}
+
+		.button_play_all, .collection_info { float:left; }
+
+		.collection_name { font-size:2.085vw; margin:0 2.085vw 0 0; display:block; max-width:62vw; float:left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+		.value_holder { float:left; margin: 0.4vw 0 0 0; display:none; }
+		#collection_shares, /*#collection_bestimate,*/ .collection_name { font-weight:bold; } 
+		#collection_bestimate { color:#38D388; }
+		#collection_shares { margin-right:2.085vw; }
+		.collection_shares { padding-right:2.085vw; }
+
+		#art_details_title { font-size:2.085vw; font-weight:bold; }
+		#art_details_description { font-size:1.563vw; line-height:2.6vw; height:5.8vw; max-height:5vw; overflow:hidden; text-overflow:ellipsis; }
+		
+		* {	font-family: sofia-pro, sans-serif;	font-weight: 400; }
+
+		#loader, #add { width:100vw; height:100vh; }
+
+		#loader { background-color:white; background-image:url(https://cdn.swyr.tv/channels/kbean/media/images/logo-loader.png); background-repeat:no-repeat; background-position:center center; background-size:contain; }
+
+		.logo_add { width:10.425vw; display:block; margin:0 auto; margin-top:4vw; margin-bottom:2vw; }
+		.logo_full { width: 14vw; display: block; position: absolute; top: 11vw; left: 17.5vw; }
+		#add { text-align:center; }
+		#add p { font-size:2.6vw; margin:4vw 20vw 0 20vw; }
+		#add span { font-weight:bold !important; }
+		#button_add_device { width:31.275vw; height:5.2125vw; background-color:#38D388; border-radius:10px; margin:0 auto; margin-top:6.6vw; }
+		#button_add_device span { display:block; padding-top:1.6vw; color:white; font-weight:normal !important; font-size:1.35vw; letter-spacing:0.14vw; }
+
+		.fade_selector { visibility:hidden; animation-duration:1s; }
+
+		.cacher { width:1px; height:1px; position:absolute;top:-1; overflow:hidden; }
+
+		#fader { width:100vw; height:27.3vw; position:absolute; top:0px; left:0px; z-index:100; 
+			background: rgb(255,255,255);
+			background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(255,255,2551,1) 92%, rgba(255,255,255,0) 100%);
+			background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 92%,rgba(255,255,255,0) 100%); 
+			background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(255,255,255,1) 92%,rgba(255,255,255,0) 100%); 
+		}
+
+		h1 { font-size:3.125vw; font-weight:bold !important; }
+
+		/* animations */
+
+		@keyframes fadeIn {
+			from { opacity:0; }
+			to { opacity:1; }
+		}
+
+		@keyframes fadeOut {
+			from { opacity:1; }
+			to { opacity:0; }
+		}
+
+		#form_holder {width: 31.275vw; margin: 11vw 0 0 50vw; }
+		.error { color:#F9102C; margin:0 0 0 0; }
+		#p_message { position: absolute; top: 33vw; left: 3vw; display: block; overflow: hidden; width: 44vw; font-size: 2vw; text-align: center; }
+		.form-control { display: block; width:100%; height:5.2125vw; padding:0 0 0 2vw; font-size:1.65vw; color:#495057; font-weight:bold !important; background-color:#F8F8FB; background-clip: padding-box; border: 1px solid #ced4da; border-radius: 10px; transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out; margin:4vw 0 0 0; }
+		::placeholder { color:#D8D8E6; font-weight:normal !important;}
+		.text-danger { color:#F9102C; }
+		.text-success { color:#38D388; }
+
+		
+		.btn { background-color:#D8D8E6; display: inline-block; text-align: center; vertical-align: middle;  border: 0px transparent; background-color: #D8D8E6; width:107%; height:5.2125vw; color:white; font-weight:normal; font-size:1.35vw; letter-spacing:0.14vw; border-radius: 10px; }
+		#auth_button:focus { background-color:#38D388; }
+		#auth_button { margin:4vw 0 0 0; }
+
+		#welcome_screen { text-align:center; }
+		#welcome_profile_picture { width:12vw; height:12vw; background-position:center; background-size:cover; background-repeat:no-repeat; border-radius:50%; margin:0 auto; margin-top:18vw; margin-bottom:0px; background-color:black; border:3px solid white; image-orientation:from-image; }
+		#profile_name { font-weight:bold !important; }
+
+		#slider_collection_art_0 { position:absolute; top:26vw; left:3vw; }
+
+		.thumb_border { position:absolute; z-index:10;  width:17.2vw; height:9.9vw; top:27.3vw; left:2.6vw; visibility:hidden; }
+
+		#instructions_screen { display:none; width:100vw; height:100vh; background-color:white; }
+		#instructions { font-size:2.8vw; width:35vw; height:fit-content; margin:4.1vw 7vw 7vw 14vw; float:left; padding:17vw 1vw 1vw 1vw; display:none; } 
+		#video_instructions { width:100vw; height:100vh; }
+
+		.video-player { z-index:2000; width:100vw; height:100vh; position:absolute; top:0px; left:0px; background-color:#f9102c; }
+
+		/* Chrome, Safari, Edge, Opera */
+		input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {-webkit-appearance: none; margin: 0; }
+		
+		/* Firefox */
+		input[type=number] {-moz-appearance: textfield; }
+
+
+		
+
+		@media screen and (min-width: 960px) {
+
+			.form-control, .btn, #button_add_device {border-radius:5px; }
+			.thumb_border { border:4px solid #F9102C; }
+		}
+
+		@media screen and (min-width: 1280px) {
+
+			.form-control, .btn, #button_add_device {border-radius:6.6px; }
+			.thumb_border { border:5px solid #F9102C; }
+
+		}
+
+		@media screen and (min-width: 1920px) {
+
+			.form-control, .btn, #button_add_device {border-radius:7px; }
+			.thumb_border { border:8px solid #F9102C; }
+
+		}
+
+		@media screen and (min-width: 3840px) {
+
+			.form-control, .btn, #button_add_device {border-radius:20px; }
+			.thumb_border { border:16px solid #F9102C; }
+			
+		}
+
+		.settings_container { overflow:hidden; margin-left:3vw; margin-top:6vw; }
+		.settings_container h2 { color:#3890D3; }
+
+		.speed_button { padding:0.45vw 0 0 0; width:7vw; height:2.5vw; font-size:1.4vw; text-align:center; text-transform:uppercase; background-color:#D8D8E6; float:left; margin:1vw 1vw 1vw 0; overflow:hidden; border-radius:0.3vw; }
+		.speed_button:focus { background-color:#3890D3; color:white;  }
+		.settings_div { width:100%; overflow:hidden; }
+
+		.active_border { border:6px solid #38D388 !important; }
+		.active_border:focus { border:6px solid #F9102C !important; }
+
+		.active { background-color:#38D388 !important; color:white; } 
+		.mat-thumb:focus { border:6px solid #3890D3; }
+		.mat-thumb { width:20vw; height:11.25vw; float:left; margin:1vw 1vw 1vw 0;  background-repeat:no-repeat; background-position: center center; background-size:cover; border:6px solid white; }
+		
+		.mat-board-thumb { width:20vw; height:11.25vw;}
+		#mat_blank { }
+		#mat_white { background-image:url(https://cdn.swyr.tv/channels/kbean/media/images/white-mat-board.png); background-repeat:no-repeat; background-position: center center; background-size:contain; }
+		#mat_black { background-image:url(https://cdn.swyr.tv/channels/kbean/media/images/black-mat-board.png); background-repeat:no-repeat; background-position: center center; background-size:contain; }
+
+		#log_out { margin-top:5vw; width:9vw; }
+
+		#fs_mat { width:100vw; height:100vh; position:absolute; z-index:1100; background-position:center center; background-repeat:no-repeat; background-size:cover; display:none; top:0px; left:0px; }
+
+		#saved_speed, #saved_mat { opacity:0; color:#38D388; }
+
+		#small_logo { width:6vw; height:6vw; background-image:url(https://cdn.swyr.tv/channels/kbean/media/images/logo-small.png); background-size:98%; background-repeat:no-repeat; background-position:center center; position:absolute; top:-1vw; left:88.5vw; }
+
+		.close_modal, .refresh_modal { display:none; width:100vw; height:100vh; filter:scale(0.2); background-color:#171717; position:absolute; top:0; left:0;  z-index:30000; opacity:0; }
+		.close_confirmation { display:table; width:100vw; height:100vh; }
+		.close_confirmation_dialogue { display:table-cell; vertical-align:middle; text-align:center; width:30vw; height:30vh; color:white; }
+		.exit { padding:2vw; margin:2vw; text-align:center; width:20vw; float:left; border-radius:4px; font-size:2vw; background-color:rgba(0,0,0,0.8); }
+		.exit_holder { width: 56vw; text-align: center; overflow: hidden; margin: 0 auto; }
+		.exit_yes:focus { background-color:#38D388; }
+		.exit_no:focus { background-color:#F9102C; }
+
+		.fullscreen-slider { top:-1.7vw !important; left:0 !important; width:100vw !important; height:100vh !important; z-index:1000; }
+		.fullview { width:100vw; height:100.1vh; }
+
+
+		.spinner-wrapper {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 9999999999999999999999999999999999999999999999999999999999;
+			background-color: #242f3f;
+			/*display:flex;*/
+			display:none;
+			justify-content: center;
+			align-items: center;
+		}
+		.spinner {
+			display: inline-block;
+			width: 30px;
+			height: 30px;
+			position: relative;
+			border: 4px solid #Fff;
+			animation: spinner 2s infinite ease;
+		}
+		.spinner-inner {
+			vertical-align: top;
+			display: inline-block;
+			width: 100%;
+			background-color: #fff;
+			animation: spinner-inner 2s infinite ease-in;
+		}
+		
+		@keyframes spinner {
+			0% { transform: rotate(0deg);}
+			25% { transform: rotate(180deg);}
+			50% { transform: rotate(180deg);}
+			75% { transform: rotate(360deg);}
+			100% { transform: rotate(360deg);}
+		}
+		@keyframes spinner-inner {
+			0% { height: 0%;}
+			25% { height: 0%;}
+			50% { height: 100%;}
+			75% { height: 100%;}
+			100% { height: 0%;}
+		}
+
+	</style>
+	
+</head>
+<body>
+
+	<div class="spinner-wrapper" id="spinner-wrapper">
+		<span class="spinner">
+		  <span class="spinner-inner"></span>
+		</span>
+	</div>
+
+	<div id="debug"><ul id="debug_ul"></ul></div>
+
+	<div id="refresh_modal" class="refresh_modal">
+		<div class="close_confirmation">
+			<div class="close_confirmation_dialogue">
+				<h2>Refreshing your collections...</h2>			
+			</div>
+		</div>
+	</div>
+
+	<div id="close_modal" class="close_modal">
+		<div class="close_confirmation">
+			<div class="close_confirmation_dialogue">
+				<h2>Are you sure you want to exit?</h2>
+				
+				<div class="exit_holder">
+					<div class="exit_yes exit" id="exit_yes" tabindex="0">yes</div><div class="exit_no exit" id="exit_no" tabindex="0">no</div>
+				</div>
+			
+			</div>
+		</div>
+	</div>
+
+	<!-- cacher -->
+	<div class="cacher" id="cacher">
+		<img src="https://cdn.swyr.tv/channels/kbean/media/images/logo-loader.png" id="logo_loader" />
+		<img src="https://cdn.swyr.tv/channels/kbean/media/images/white-mat-board.png" />
+		<img src="https://cdn.swyr.tv/channels/kbean/media/images/black-mat-board.png" />
+
+	</div>
+
+	<!-- loading screeen -->
+	<div id="loading_screen">
+		<div id="loader">
+			
+		</div>
+	</div>
+
+	<div id="add_screen">
+		<div id="add">
+			<img src="https://cdn.swyr.tv/channels/kbean/media/images/logo-full.png" class="logo_add" />
+			<h1>Welcome to Kbean's art streaming service!</h1>
+			<p>
+				Sign in to your Kbean account on your mobile app and <span>add a new device</span> in your settings.
+			</p>
+			<div id="button_add_device" tabindex="-1">
+				<span>ADD THIS DEVICE</span>
+			</div>
+		</div>
+	</div>
+
+	<!-- auth screen -->
+	<div id="auth_screen">
+
+		<img src="https://cdn.swyr.tv/channels/kbean/media/images/logo-full.png" class="logo_full" />
+
+		<div id="form_holder">
+			<div id="p_message">
+				On your Kbean mobile app, go to Profile/Devices and tap "Generate Authentication Code."
+			</div>
+			<form id="reg" class="form-group mb-3" class="needs-validation"  action="#" onsubmit="return sendAuth()"> <!-- novalidate="" -->
+				<!--<div class="form-group mb-3">-->
+					<input tabindex="1" type="email" placeholder="Your Kbean account email" id="email" name="email" class="form-control" required maxlength="320">
+					<input tabindex="2" type="text" placeholder="Name this device!" id="device_name" name="device_name" class="form-control" required maxlength="64">
+					<input tabindex="3" type="text" placeholder="Kbean app authorization code" id="auth_code" name="auth_code" class="form-control" maxlength="6" required onkeypress="return isNumberKey(event)" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+					<input id="auth_button" type="submit" value="ADD THIS DEVICE" tabindex="4" class="btn" onsubmit="return sendAuth()">
+					<!--<button id="auth_button" type="submit" value="ADD THIS DEVICE" tabindex="4" class="btn"></button>-->
+				<!--</div>-->
+			</form>
+		</div>
+	</div>
+
+	<!-- welcome screen -->
+	<div id="welcome_screen">
+		<div id="welcome_profile_picture"></div>
+		<h1>Welcome back, <span id="profile_name"></span>!</h1>
+	</div>
+
+	<div id="top_nav_holder">
+		<ul class="top-nav">
+			<li tabindex="-1" id="nav_my_collections">my collections</li>
+			<li tabindex="-1" id="nav_refresh">refresh</li>
+			<li tabindex="-1" id="nav_settings">settings</li>
+		</ul>
+		<div id="small_logo"></div>
+	</div>
+
+	<!-- art screen -->
+	<div id="art_screen">
+
+		<div id="fs_mat"></div>
+
+		<div id="fader">
+			<div id="my_collections_holder" class="nav_view">
+				<div class="details_holder">
+					<div class="profile_holder" id="profile_info">
+						<div class="profile_photo" id="art_profile_photo"></div>
+					</div>
+
+					<div class="art_holdings_holder" id="art_holdings">
+						You own: <span id="you_own"></span><br/>
+						You paid: <span id="you_paid"></span><br/>
+						<!-- Bestimate value: <span id="bestimate"></span><br/> -->
+					</div>
+					
+					<div class="art_details_holder" id="art_details">
+						<span id="art_details_title"></span> by: <span id="art_details_artist"></span><br/>
+						<div id="art_details_description"></div>
+					</div>
+				</div>
+
+				<div class="collection_info_holder">
+					<div class="collection_info">
+						<span class="collection_name" id="collection_name">All Art</span>
+						<div class="value_holder">
+							<span class="collection_shares">Total Shares: <span id="collection_shares"></span>|</span>
+							<!-- <span class="collection_bestimate">Total Value: <span id="collection_bestimate"></span></span> -->
+						</div>
+					</div>
+					<div id="thumb_border" class="thumb_border"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- settings screen -->
+	<div id="settings_screen">
+		<div class="settings_container">
+
+			<div class="settings_div">
+				<h2>Gallery speed <span id="saved_speed">saved!</span></h2>
+
+				<p>
+					Select how long each full screen art stays on screen before showing the next art.
+				</p>
+
+				<div class="speed_button" id="15s" tabindex="-1">15 sec</div>
+				<div class="speed_button" id="30s" tabindex="-1">30 sec</div>
+				<div class="speed_button" id="1m" tabindex="-1">1 min</div>
+				<div class="speed_button" id="5m" tabindex="-1">5 mins</div>
+				<div class="speed_button" id="10m" tabindex="-1">10 mins</div>
+				<div class="speed_button" id="15m" tabindex="-1">15 mins</div>
+				<div class="speed_button" id="30m" tabindex="-1">30 mins</div>
+				<div class="speed_button" id="1h" tabindex="-1">1 hour</div>
+			</div>
+
+			<div class="settings_div">
+				<h2>Choose a mat board <span id="saved_mat">saved!</span></h2>
+
+				<div class="mat-thumb" id="mat_0" tabindex="-1">
+					<div class="mat-board-thumb" id="mat_blank"></div>
+				</div>
+
+				<div class="mat-thumb" id="mat_1" tabindex="-1">
+					<div class="mat-board-thumb" id="mat_white"></div>
+				</div>
+
+				<div class="mat-thumb" id="mat_2" tabindex="-1">
+					<div class="mat-board-thumb" id="mat_black"></div>
+				</div>
+
+			</div>
+			
+			<div class="settings_div">
+				<div class="speed_button" tabindex="-1" id="log_out">Log out</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- instructions screen -->
+	<div id="instructions_screen">
+		<video id="video_instructions" loop muted></video>
+	</div>
+
+
+	<script type="text/javascript">
+
+		var div_spinner_wrapper = document.getElementById("spinner-wrapper");
+
+		var fs_mat = document.getElementById('fs_mat');
+    	var orientationHack = [];
+
+		var check;
+		var art_data = [];
+		var profile_data = [];
+		var collection_data = [];
+		var currency = '$';
+		var collection_holdings = [];
+
+		var first_time = false;
+		var cdn_root = 'https://appsrv.swayer.net/API/V2/image/1/';
+    	var cdn_url = 'https://swayer.blob.core.windows.net';
+		var active_slide = 1; /* row */
+		var target_slide = 0; /* to eable and disable */
+		var art_size;
+		var image_cache = [];
+		var auth_vault = false;
+
+		var gap = 10;
+		var after = 60;
+		var animating = false;
+		var video_collection = [];
+		var buffering = true;
+
+		var to_top = -127.5;
+		var to_bottom = 127.5;
+		var gsap_mod = 0.2;
+
+		var firstRender = true;
+		var sliders = [];
+
+		var active_screen;
+		var last_active;
+		var from_focus;
+
+		var slide_data_index = 0;
+		var slide_type = 'slider';
+
+		var modal = false;
+		var refreshed = false;
+
+	    if( window.innerWidth == 960 ){
+			gap = gap * 1;
+			after = after * 1;
+			to_top = to_top * 1;
+			to_bottom = to_bottom * 1;
+			gsap_mod = gsap_mod * 1;
+
+	    }else if( window.innerWidth == 1280 ){
+			gap = (gap * 4) / 3;
+			after = (after * 4) / 3;
+			to_top = (to_top * 4) / 3;
+			to_bottom = (to_bottom * 4) / 3;
+			gsap_mod = (gsap_mod * 4) /3;
+
+	    }else if( window.innerWidth == 1920 ){
+			gap = gap * 2;
+			after = after * 2;
+			to_top = to_top * 2;
+			to_bottom = to_bottom * 2;
+			gsap_mod = gsap_mod * 2;
+
+	    }else if( window.innerWidth == 3840 ){
+			gap = gap * 4;
+			after = after * 4;
+			to_top = to_top * 4;
+			to_bottom = to_bottom * 4;
+			gsap_mod = gsap_mod * 4;
+	    }
+
+		var slider_all_art;
+		var slider_collection_art = {};
+		var fs = false;
+		var sound = false;
+		var close_up = false;
+
+		var you_own = document.getElementById('you_own');
+		var you_paid = document.getElementById('you_paid');
+		//var bestimate = document.getElementById('bestimate');
+
+		var art_details_title = document.getElementById('art_details_title');
+		var art_details_artist = document.getElementById('art_details_artist');
+		var art_details_description = document.getElementById('art_details_description');
+
+		var collection_shares = document.getElementById('collection_shares');
+		//var collection_bestimate = document.getElementById('collection_bestimate');
+		var collection_name = document.getElementById('collection_name');
+
+
+		var div_loading_screen = document.getElementById("loading_screen");
+		var div_add_screen = document.getElementById("add_screen");
+		var div_auth_screen = document.getElementById("auth_screen");
+		var div_welcome_screen = document.getElementById("welcome_screen");
+		var div_art_screen = document.getElementById("art_screen");
+		var div_settings_screen = document.getElementById("settings_screen");
+
+		var timer;
+		var mat;
+
+		var code = document.querySelector('#auth_code');
+
+		code.oninput = function(){
+			var x = code.value;
+
+			if( code.value.length == 6 ){
+				giveFocus('auth_button');
+			}	
+		}
+
+		function addCSSRule(sheet, selector, rules, index) {
+		    if("insertRule" in sheet) {
+		        sheet.insertRule(selector + "{" + rules + "}", index);
+		    } else if("addRule" in sheet) {
+		        sheet.addRule(selector, rules, index);
+		    }
+		}
+
+		var style = document.createElement('style');
+			style.id = 'bgs';
+
+		/* WebKit hack :( */
+		style.appendChild(document.createTextNode(''));
+
+		/* Add the <style> element to the page */
+		document.head.appendChild(style);
+
+		/* left: 37, up: 38, right: 39, down: 40, */
+		/* spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36 */
+		var keys = {37: 1, 38: 1, 39: 1, 40: 1};
+
+		function preventDefault(e) {
+			e.preventDefault();
+		}
+
+		function preventDefaultForScrollKeys(e) {
+			if (keys[e.keyCode]) {
+				preventDefault(e);
+				return false;
+			}
+		}
+
+		/* modern Chrome requires { passive: false } when adding event */
+		var supportsPassive = false;
+		try {
+			window.addEventListener("test", null, Object.defineProperty({}, 'passive', {
+				get: function () { supportsPassive = true; } 
+			}));
+		} catch(e) {}
+
+		var wheelOpt = supportsPassive ? { passive: false } : false;
+		var wheelEvent = 'onwheel' in document.createElement('div') ? 'wheel' : 'mousewheel';
+
+		/* call this to Disable */
+		function disableScroll() {
+			window.addEventListener('DOMMouseScroll', preventDefault, false); /* older FF */
+			window.addEventListener(wheelEvent, preventDefault, wheelOpt); /* modern desktop */
+			window.addEventListener('touchmove', preventDefault, wheelOpt); /* mobile */
+			window.addEventListener('keydown', preventDefaultForScrollKeys, false);
+		}
+
+		/* call this to Enable */
+		function enableScroll() {
+			window.removeEventListener('DOMMouseScroll', preventDefault, false);
+			window.removeEventListener(wheelEvent, preventDefault, wheelOpt); 
+			window.removeEventListener('touchmove', preventDefault, wheelOpt);
+			window.removeEventListener('keydown', preventDefaultForScrollKeys, false);
+		}
+
+		function checkCache(element){
+
+			check = setInterval(function(){
+				if( document.getElementById(element).complete == true ){
+					clearInterval(check);
+
+					if( element == "logo_loader"){
+						renderScreen("loading_screen");
+					}
+
+				}else if( document.getElementById(element).complete == false ){
+					
+				}
+
+			}, 10);
+		}
+
+		disableScroll();
+
+		/**
+		 * START DEVICE REGISTRATION	
+		 */
+
+		/**
+		* URL to register device and the email address. We'll need to ask to user to enter their email address AND AuthCode in a form. 
+		* AuthCode should be upddated in the body object AuthCode and user email appended to the query string when they want to register their device.
+		*/
+		var kbean_base_url = 'https://kbeanbetastaging.azurewebsites.net/';
+		var kbean_device_auth_url = kbean_base_url + 'api/swayer/RegisterDevice?username=';
+		var kbean_device_auth_body;
+		var kbean_device_auth_email;
+		var kbean_device_auth_token;
+
+		var kbean_url;
+		var kbean_body;
+
+		function checkAuth(){
+			/* Check browser support */
+			if (typeof(Storage) !== "undefined") {
+
+
+				setTimeout(function(){
+
+					if( localStorage.getItem("kbean_auth") == null ){
+
+						first_time = true;
+
+
+						div_loading_screen.style.animationName = "fadeOut";
+				        div_loading_screen.addEventListener("animationend", function(){
+				            div_loading_screen.style.display = "none";
+				            renderScreen("add_screen", null);
+				            giveFocus("button_add_device");
+				        });
+
+					}else{
+
+						if( first_time == false ){
+
+
+							div_loading_screen.style.animationName = "fadeOut";
+
+					        div_loading_screen.addEventListener("animationend", function(){
+					            div_loading_screen.style.display = "none";
+					            getArt();
+					        });
+
+						}else if( first_time == true ){
+
+							div_auth_screen.style.animationName = "fadeOut";
+
+							div_auth_screen.addEventListener("animationend", function(){
+								div_auth_screen.style.display = "none";
+								getArt();
+							});
+						}
+						
+					}
+
+				}, 2000);
+
+			}else{
+			 	/* console.log("Sorry, your browser doesn't allow us to authorize your device."); */
+			}
+		}
+
+		function checkSettings(){
+			/* Check browser support */
+			if (typeof(Storage) !== "undefined") {
+
+				setTimeout(function(){
+
+					if( localStorage.getItem("slider_timer") == null ){
+
+						/* first time set defaults */
+
+						localStorage.slider_timer = 15000;
+						localStorage.slider_mat = null;
+
+						timer = 15000;
+						mat = null;
+
+					}else{
+
+		                timer = localStorage.getItem("slider_timer");
+		                mat = localStorage.getItem("slider_mat");
+					}
+
+				}, 2000);
+
+			}else{
+			 	/* console.log("Sorry, your browser doesn't allow us to authorize your device."); */
+			}
+		}
+
+		function clearScreen(screen){
+			document.getElementById(screen).style.display = "none";
+		}
+
+		function saved(item){
+			gsap.to("#"+item, {opacity: 1, duration: 0.5});
+			gsap.to("#"+item, {opacity: 0, duration: 0.5, delay: 2}); 
+		}
+
+		function showClose(){
+			fs = true;
+			close_up = true;
+			last_active = getActiveElement();
+			document.getElementById('close_modal').style.display = 'block';
+            giveFocus('exit_yes');
+			gsap.to("#close_modal", {opacity: 1, duration: 0.3, scale:1, ease:Power2.easeOut});
+
+			for( var i = 0; i < sliders.length; i++ ){
+				sliders[i].disable();
+			}
+		}
+
+		function showRefresh(){
+			document.getElementById('refresh_modal').style.display = 'block';
+			gsap.to("#refresh_modal", {opacity: 1, duration: 0.3, scale:1, ease:Power2.easeOut});
+		}
+
+		function cancelClose(){
+			gsap.to("#close_modal", {opacity: 0, duration: 0.3,  scale:0.2, ease:Power2.easeOut, onComplete:function(){
+				document.getElementById('close_modal').style.display = 'none';
+			}});
+
+			giveFocus(last_active);
+
+			if( active_screen == 'art_screen' ){
+				sliders[active_slide].enable();
+			}
+
+			fs = false;
+			close_up = false;
+		}
+
+		function renderScreen(screen){
+
+			active_screen = screen;
+
+			if( screen == "loading_screen" ){
+
+				document.getElementById(screen).style.display = "block";
+				document.getElementById("loading_screen").style.animationName = "fadeIn";
+				checkAuth();
+
+			}else if( screen == "add_screen" ){
+
+				document.getElementById(screen).style.display = "block";
+				div_add_screen.style.animationName = "fadeIn";
+
+			}else if( screen == "auth_screen" ){
+
+				div_add_screen.style.animationName = "fadeOut";
+
+		        div_add_screen.addEventListener("animationend", function(){
+	            	div_add_screen.style.display = "none";
+	           		div_auth_screen.style.animationName = "fadeIn";
+		            div_auth_screen.style.display = "block";
+		            giveFocus("email");
+
+		        });
+
+			}else if( screen == "welcome_screen" ){
+
+	            div_welcome_screen.style.animationName = "fadeIn";
+	            div_welcome_screen.style.display = "block";
+
+	            setTimeout(function(){
+	            	div_welcome_screen.style.animationName = "fadeOut";
+			        div_welcome_screen.addEventListener("animationend", function(){
+		            	div_welcome_screen.style.display = "none";
+		            	renderScreen("art_screen");
+			        });
+	            }, 2000);
+
+			}else if( screen == "art_screen" ){
+           		div_art_screen.style.animationName = "fadeIn";
+	            div_art_screen.style.display = "block";
+
+		        div_art_screen.addEventListener("animationend", function(){
+		        	document.getElementById("slider_collection_art_0").style.animationName = "fadeIn";
+		        	document.getElementById("slider_collection_art_0").style.visibility = 'visible';
+		        	document.getElementById("nav_my_collections").classList.add('active_nav');
+
+		        	if( firstRender == true ){
+		        		giveFocus('collection_art_0');
+		        		document.getElementById("thumb_border").style.visibility = 'visible';
+						gsap.to("#top_nav_holder", { opacity: 1, duration: 1, delay: 0.5}); 
+		        		firstRender = false;
+		        	}
+
+		        	animateCollectionSliders();
+		        });
+
+		        if( refreshed == true ){
+		        	animateCollectionSliders();
+		        }
+
+			}else if( screen == "settings_screen" ){
+
+           		div_settings_screen.style.animationName = "fadeIn";
+	            div_settings_screen.style.display = "block";
+	            div_settings_screen.style.zIndex = 9;
+        		document.getElementById("thumb_border").style.visibility = 'hidden';
+
+
+	        	document.getElementById('nav_settings').classList.add('active_nav');
+
+	        	var mats = document.getElementsByClassName('mat-board-thumb');
+
+	        	for( i = 0; i < document.getElementsByClassName('mat-thumb').length; i++ ){
+
+	        		if( localStorage.getItem('type') == 'demo' ){
+	        			// document.getElementsByClassName('mat-thumb')[i].style.backgroundImage = 'url('+cdn_root+'/'+art_data.holdings[0].artworkId+'-pub/_thumb_large.jpg)';
+	        			document.getElementsByClassName('mat-thumb')[i].style.backgroundImage = 'url('+cdn_root+art_data.holdings[0].artworkId+'/'+profile_data.id+'/_thumb_hd.jpg)'; 
+
+	        		}else{
+	        			document.getElementsByClassName('mat-thumb')[i].style.backgroundImage = 'url('+cdn_root+art_data.holdings[0].artworkId+'/'+profile_data.id+'/_thumb_hd.jpg)'; 
+	        		}
+	        		
+	        	}
+
+		        div_settings_screen.addEventListener("animationend", function(){
+
+		        });
+			}else if( screen = "instructions_screen" ){
+
+				var instructions_screen = document.getElementById('instructions_screen');
+				var video_instructions = document.getElementById('video_instructions');
+
+
+				instructions_screen.style.display = 'block';
+				video_instructions.src = 'https://cdn.swyr.tv/channels/kbean/media/video/kbean-ctv-tutorial.mp4';
+				video_instructions.play();
+			}
+		}
+
+		function animateCollectionSliders(){
+
+        	for( var i = 0; i < document.getElementsByClassName('fade_selector').length; i++ ){
+        		document.getElementsByClassName('fade_selector')[i].style.animationName = "fadeIn";
+        		document.getElementsByClassName('fade_selector')[i].style.visibility = "visible";
+        	}
+
+        	if( refreshed == true ){
+
+				gsap.to("#refresh_modal", {opacity: 0, duration: 0.3, scale:1, ease:Power2.easeOut, onComplete:function(){
+					document.querySelector('#refresh_modal').style.display = 'none';
+					giveFocus('collection_art_0');
+        			document.querySelector('#thumb_border').style.visibility = 'visible';
+        			refreshed = false;
+        			firstRender = false;
+
+				}});
+        	}
+
+		}
+
+		function logOut(){
+			authorizeVault(false);
+			localStorage.clear();
+
+			caches.delete(cacheName).then(function(boolean) {
+				console.log('cache is deleted');
+			});
+						
+			setTimeout(function(){
+				window.location.reload(false);
+			}, 1000);
+		}
+
+		function giveFocus(element){
+			document.getElementById(element).focus();
+		}
+
+		function authorizeDevice(email, device_name, auth){
+
+			kbean_device_auth_email = email;
+			kbean_device_auth_token = auth;
+
+		    /**
+		    * This object contains all the necessary data and metadata for the device that is being registered.
+		    * Get the AuthCode from the KBean app in Profile/Devices/Generate Authentication Code.
+		    * You'll need to remove and add the device to generate new AuthCodes for dev and testing.
+		    */
+		    kbean_device_auth_body = {
+		            "DeviceId": guid(),
+		            "FriendlyName": device_name,
+		            "AuthCode": kbean_device_auth_token,
+		            "Metadata": {
+		                "configId": "1",
+		                "os": window.navigator.platform,
+		                "osVersion": window.navigator.appVersion,
+		                "firmwareVersion": null,
+		                "appSessionID": guid(),
+		                "adSessionID": null,
+		                "applicationName": "KBean by Swayer",
+		                "platformName": window.navigator.appCodeName+', '+window.navigator.appName,
+		                "mobileCarrier": null,
+		                "manufacturer": window.navigator.vendor,
+		                "advertisingIdentifier": guid(),
+		                "applicationIdentifier": window.document.location.hostname,
+		                "applicationVersion": "0.5",
+		                "sdkVersion": null,
+		                "deviceModel": window.navigator.appVersion,
+		                "screenResolution": screen.width+','+screen.height,
+		                "deviceConnectionType": null,
+		                "trackFlag": 1
+		            }
+		        };
+		    
+		    kbean_device_auth_url = kbean_device_auth_url+kbean_device_auth_email;
+
+		    registerDevice(kbean_device_auth_url, kbean_device_auth_body);
+		}
+
+		function guid(){
+		    function s4(){
+		        return Math.floor((1 + Math.random()) * 0x10000)
+		        .toString(16)
+		        .substring(1);
+		    }
+			return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4(); 
+		}
+
+		/**
+		* Makes a POST request and sends the body required to get a data response from the KBean content API
+		* @method registerDevice
+		* @param {string} url: the KBean POST URL: declared in var kbean_device_auth_url
+		* @param {obj} body: the KBean POST body that returns a set of data based on the parameters: declared in var kbean_device_auth_body
+		*/
+		function registerDevice(url, body){
+
+			if( kbean_device_auth_email == 'demo@kbean.com' && kbean_device_auth_token == '000000' ){
+
+                // var kbean_device_token = JSON.parse(request.responseText);
+                localStorage.setItem("type", "demo");
+                localStorage.setItem("kbean_auth", '000000');
+                localStorage.setItem("kbean_email", 'demo@kbean.com');
+                localStorage.setItem("kbean_device_id", '000000');
+
+            	document.getElementById('p_message').innerHTML = "DEMO: Registering your device!";
+            	document.getElementById('p_message').classList.add('text-success');
+
+                checkAuth();
+
+			}else{
+
+			    var request = makeHttpObject();
+			    request.open("POST", url, true);
+			    request.withCredentials = false;            
+			    request.setRequestHeader("Content-Type", "application/json");
+			    request.send(JSON.stringify(body));
+
+			    request.onreadystatechange = function() {
+			        if ( request.readyState == 4 ){
+			            if ( request.status == 200 ){
+
+			                var kbean_device_token = JSON.parse(request.responseText);
+			                localStorage.setItem("kbean_auth", kbean_device_token.token);
+			                localStorage.setItem("kbean_email", kbean_device_auth_email);
+			                localStorage.setItem("kbean_device_id", kbean_device_auth_body.DeviceId);
+
+		                	document.getElementById('p_message').innerHTML = "Registering your device!";
+		                	document.getElementById('p_message').classList.add('text-success');
+
+
+			                checkAuth();
+
+			            }else{
+							if( request.status == 400 ){
+			                	var p = document.getElementById('p_message');
+			                	p.innerHTML = JSON.parse(request.responseText);
+			                	p.classList.add('text-danger');
+			                	giveFocus('email');
+
+								kbean_device_auth_url = kbean_base_url + 'api/swayer/RegisterDevice?username=';
+								kbean_device_auth_email = null;
+								kbean_device_auth_token = null;
+
+			                }else{
+			                	p.classList.remove('text-danger');
+			                }
+			            }
+			        }
+			    }			
+			}
+		}
+
+		function sendAuth(){
+	
+			var email_address = document.getElementById('email').value;
+			var device_name = document.getElementById('device_name').value;
+			var auth = document.getElementById('auth_code').value;
+
+			authorizeDevice(email_address, device_name, auth);
+
+			return false;
+		}
+
+		/**
+		* Multiple ways to make an XMLHttpRequest based on the WebKit support. Used by method: loadArt()
+		* @method makeHttpObject
+		*/
+		function makeHttpObject() {
+		    try {
+		        return new XMLHttpRequest();
+		    } catch (error) {}
+		    try {
+		        return new ActiveXObject("Msxml2.XMLHTTP");
+		    } catch (error) {}
+		    try {
+		        return new ActiveXObject("Microsoft.XMLHTTP");
+		    } catch (error) {}
+
+		    throw new Error("Could not create HTTP request object.");
+		}
+
+		/**
+		 * END DEVICE REGISTRATION	
+		 */
+
+		/**
+		 * START ART HANDLING	
+		 */
+		function getProfile(){
+
+			if( localStorage.getItem('type') == 'demo' ){
+				kbean_profile_url = 'https://cdn.swyr.tv/channels/kbean/demo/GetUserProfile.json';
+			}else{
+				kbean_profile_url = kbean_base_url + 'api/swayer/GetUserProfile';
+			}
+
+			loadProfile(kbean_profile_url);
+		}
+
+		function loadProfile(url){
+		    var request = makeHttpObject();
+		    request.open("GET", encodeURI(url), true);
+		    request.withCredentials = false;
+		    request.setRequestHeader("Content-Type", "application/json");
+		    request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('kbean_auth'));
+		    request.send();
+
+		    request.onreadystatechange = function() {
+		        if (request.readyState == 4) {
+		            if (request.status == 200) {
+		                setProfileData(JSON.parse(request.responseText));
+
+		            } else {
+		                if( request.status == 403 || request.status == 401 ){
+		                	logOut();	                    	
+		                }
+		            }
+		        }
+		    }
+		}
+
+		function setProfileData(data){
+
+		 	profile_data = JSON.stringify(data);
+		 	profile_data = JSON.parse(profile_data);
+		 	authorizeVault(true);
+		}
+
+		function renderProfileData(){
+
+		 	renderSliders();
+
+            var name;
+
+            if( profile_data.firstName == "" && profile_data.lastName == "" ){
+            	name = profile_data.userName;
+            }else if( profile_data.firstName == "" && profile_data.lastName != ""){
+            	name = profile_data.lastName;
+            }else if( profile_data.firstName != "" && profile_data.lastName == "" ){
+            	name = profile_data.firstName;
+            }else{
+            	name = profile_data.firstName;
+            }
+
+            name = name.trim();
+
+            if( profile_data.profilePicture == null ){
+				document.getElementById("welcome_profile_picture").style.backgroundImage = 'url(https://cdn.swyr.tv/channels/kbean/media/images/profile-icon.png)';
+				document.getElementById("art_profile_photo").style.backgroundImage = 'url(https://cdn.swyr.tv/channels/kbean/media/images/profile-icon.png)';
+            }else{
+				document.getElementById("welcome_profile_picture").style.backgroundImage = 'url('+profile_data.profilePicture+')';
+				document.getElementById("art_profile_photo").style.backgroundImage = 'url('+profile_data.profilePicture+')';
+            }
+
+			document.getElementById("profile_name").innerHTML = name;
+
+			if( firstRender == true ){
+			 	setTimeout(function(){
+			 		renderScreen("welcome_screen");
+			 	}, 1000);
+
+			}else if( firstRender == false ){
+					renderScreen("art_screen");
+			}
+		}
+
+		function getArt(){
+
+			if( localStorage.getItem('type') == 'demo' ){
+
+				kbean_art_url = 'https://cdn.swyr.tv/channels/kbean/demo/MyArtworks.json';
+
+			}else{
+				kbean_art_url = kbean_base_url + 'api/swayer/MyArtworks';
+			}
+
+			kbean_art_body = {"Sort":"{'Created':-1}", "Page":0, "Size":100, "Criteria":[]};
+		
+			loadArt(kbean_art_url, kbean_art_body);
+		}
+
+		function loadArt(url, body){
+
+			if( localStorage.getItem('type') == 'demo' ){
+
+			    var request = makeHttpObject();
+			    request.open("GET", encodeURI(url), true);
+			    request.withCredentials = false;
+			    request.send(JSON.stringify(body));
+
+			    request.onreadystatechange = function() {
+			        if (request.readyState == 4) {
+			            if (request.status == 200) {
+			                setArtData(JSON.parse(request.responseText));
+
+			            } else {
+			                if( request.status == 403 || request.status == 401 ){
+			                	logOut();	                    	
+			                }
+			            }
+			        }
+			    }
+
+			}else{
+
+			    var request = makeHttpObject();
+			    request.open("POST", encodeURI(url), true);
+			    request.withCredentials = false;
+			    request.setRequestHeader("Content-Type", "application/json");
+			    request.setRequestHeader("Authorization", "Bearer " + localStorage.getItem('kbean_auth'));
+			    request.send(JSON.stringify(body));
+
+			    request.onreadystatechange = function() {
+			        if (request.readyState == 4) {
+			            if (request.status == 200) {
+			                setArtData(JSON.parse(request.responseText));
+
+			            } else {
+			                if( request.status == 403 || request.status == 401 ){
+			                	logOut();	                    	
+			                }
+			            }
+			        }
+			    }
+			}
+		}
+
+		function setCollections(){
+
+			collection_holdings = [];
+
+			collection_holdings.push(art_data.holdings);
+
+			for( var i = 0; i < profile_data.collections.length; i++ ){
+
+				var collection = [];
+
+				collection_holdings.push(collection);
+
+				for( var k = 0; k < art_data.holdings.length; k++ ){
+
+					if ( profile_data.collections[i].ownedArtworks.indexOf(art_data.holdings[k].artworkId) > -1) {
+					    /* Is a hot dog! */
+						collection.push(art_data.holdings[k]);
+
+					} else {
+					    /* Not a hot dog! */
+					}
+				}
+			}
+		}
+
+		function authorizeVault(state){
+
+			setCollections();
+
+			var url = 'https://appsrv.swayer.net/API/V2/Auth';
+			var apiKey = '11593d86c25144b989d1d8dd291a0327';
+
+			for( var i = 0; i < art_data.holdings.length; i++ ){
+
+				var body = {
+					"apiKey": apiKey,
+					"artworkId": art_data.holdings[i].artworkId,
+					"userId": profile_data.id,
+					"isAuthorized": state
+				};
+
+			    var request = makeHttpObject();
+			    request.open("POST", encodeURI(url), true);
+			    request.withCredentials = false;
+			    request.setRequestHeader("Content-Type", "application/json");
+			    request.send(JSON.stringify(body));
+
+			    request.onreadystatechange = function() {
+			        if (request.readyState == 4) {
+			            if (request.status == 200) {
+			               
+			                auth_vault = true;
+			                /* console.log('auth vault good'); */
+
+			            } else {
+			                if( request.status == 403 || request.status == 401 ){
+			                	/* failed auth */            	
+			                }
+			            }
+			        }
+			    }
+			}
+
+			setTimeout(function(){
+				renderProfileData();
+			}, 1000);
+		}
+
+		function preCache(){
+
+			var cacher = document.getElementById('cacher');
+
+			for( var i = 0; i < image_cache.length; i++ ){
+				var img = document.createElement('img');
+					img.src = image_cache[i].src;
+
+				cacher.appendChild(img);
+			}
+		}
+
+		const cacheName = 'kbean-cache';
+
+		function addToCache(url){
+			caches.open(cacheName).then(cache => {
+				cache.addAll([url]).then(() => {
+			    	//all requests were cached
+			    	console.log(url+' was cached');
+				});
+			});
+		}
+
+		function setArtData(data){
+
+		 	art_data = JSON.stringify(data);
+		 	art_data = JSON.parse(art_data);
+
+		 	for( var i = 0; i < art_data.holdings.length; i++ ){
+
+		 		collection_data[i]	=  art_data.holdings[i];
+		 		art_data.holdings[i].swatch = [];
+		 		getSwatch(i, art_data.holdings[i].artworkId);
+		 	}
+
+		 	if( art_data.holdings.length > 0){
+
+		 		getProfile();
+
+			}else{
+				renderScreen('instructions_screen');
+			}
+		}
+	 
+		/**
+		 * END ART HANDLING	
+	 	*/
+
+		function videoHandler(action, id, asset){
+
+		 	var loop_times = 3;
+
+			var vid = document.createElement('video');
+					vid.id = id;
+					vid.setAttribute('poster', 'https://cdn.swyr.tv/channels/kbean/media/images/kbean-video-poster.png');
+					vid.setAttribute('playsinline', '');
+					vid.setAttribute('preload', 'auto');
+					vid.setAttribute('autoplay', '');
+					vid.setAttribute('webkit-playsinline', '');
+					vid.setAttribute('tabindex', '-1');
+					vid.setAttribute('controls', '');
+					vid.setAttribute('controlsList', 'nodownload');
+					vid.setAttribute('disablePictureInPicture', '');
+					vid.classList.add('video-player');
+					vid.classList.add('bg_'+id);
+			
+			document.body.appendChild(vid);
+
+			if( action == 'create' ){
+
+				var video_instance = document.querySelector('.video-player');
+
+				sliders[active_slide].disable();
+				sliders[active_slide].update({
+					autoplay: false
+				});
+
+				if( document.body.contains(video_instance) == true ){
+					videoHandler('destroy', video_instance.id, null);
+				}
+
+				
+				/*
+				var vid = document.createElement('video');
+					vid.id = id;
+					vid.setAttribute('poster', 'https://cdn.swyr.tv/channels/kbean/media/images/kbean-video-poster.png');
+					vid.setAttribute('playsinline', '');
+					vid.setAttribute('preload', 'auto');
+					vid.setAttribute('autoplay', '');
+					vid.setAttribute('webkit-playsinline', '');
+					vid.setAttribute('tabindex', '-1');
+					vid.setAttribute('controls', '');
+					vid.setAttribute('controlsList', 'nodownload');
+					vid.setAttribute('disablePictureInPicture', '');
+					vid.classList.add('video-player');
+					vid.classList.add('bg_'+id);
+				
+				document.body.appendChild(vid);*/
+				
+
+				if( asset == null ){
+
+					url = cdn_url+'/'+id+'-pub/_main.mp4';
+
+					caches.open(cacheName).then(cache => {
+						cache.match(url).then(item => {
+							vid.src = item.url;
+						});
+					});
+					
+				}else{
+					vid.src = asset;
+				}
+
+				buffering = true;
+
+				vid.onwaiting = function() {
+				};
+
+				vid.onplaying = function() {
+				    buffering = false;
+					vid.focus();
+				};
+
+				vid.onended = function(){
+					loop_times--;
+
+					if( loop_times > 0 && document.querySelector('.video-player').duration < 60 ){
+
+						document.querySelector('.video-player').play();
+						document.querySelector('.video-player').removeAttribute('controls');
+
+
+					}else{
+
+						var vid_id = document.querySelector('.video-player').id;
+						videoHandler('destroy', vid_id, null);
+		            	sliders[active_slide].go('>');
+						loop_times = 1;
+					}
+				}
+
+				document.body.appendChild(vid);
+				fs = true;
+
+				for( var i = 0; i < sliders.length; i++ ){
+
+					sliders[i].update({
+						keyboard : false
+					}); 
+				}
+
+			}else if( action == 'destroy' ){
+
+				var vid = document.getElementById(id);
+					vid.pause();
+					vid.removeAttribute('src');
+					vid.load();
+					vid.remove();
+
+				giveFocus(from_focus);
+
+				buffering = false;
+
+				for( var i = 0; i < sliders.length; i++ ){
+					sliders[i].update({
+						keyboard : true
+					}); 
+				}
+
+				sliders[active_slide].enable();
+				sliders[active_slide].update({
+					autoplay: timer
+				});
+			}
+		}
+
+		function renderSliders(){
+
+			if( localStorage.getItem('type') == 'demo' ){
+				// cdn_url = 'https://cdn.swyr.tv/channels/kbean/demo';
+				// cdn_root = 'https://cdn.swyr.tv/channels/kbean/demo';
+			}
+
+			slider_top = 12.7;
+			sliders = [];
+			
+			for( var i = 0; i < collection_holdings.length; i++ ){
+
+				var on_refresh = document.getElementById('slider_collection_art_'+ (i));
+
+				if( document.body.contains(on_refresh) ){
+					on_refresh.remove();
+				}
+			}
+
+			preCache();
+
+			/* COLLECTIONS */
+
+			for( var i = 0; i < collection_holdings.length; i++ ){
+
+				slider_top = slider_top + 13.3;
+
+	       		var collection_row = document.createElement('div');
+	        	collection_row.id = 'slider_collection_art_'+ (i);
+	        	collection_row.classList.add('glide');
+	        	collection_row.classList.add('fade_selector');
+	        	collection_row.style.top = slider_top + "vw";
+
+	        	var collection_slider = document.createElement('div');
+	        	collection_slider.classList.add('glide__track');
+	        	collection_slider.setAttribute('data-glide-el', 'track');
+
+	        	var collection_slider_ul = document.createElement('ul');
+	        	collection_slider_ul.id = 'collection_art_'+[i];
+	        	collection_slider_ul.classList.add('glide__slides');
+				collection_slider_ul.setAttribute('tabindex', '-1');
+
+	        	collection_row.appendChild(collection_slider);
+	        	collection_slider.appendChild(collection_slider_ul);
+
+	        	for( j = 0; j < collection_holdings[i].length; j++ ){
+
+		        	if( j > 5 ){
+						rewind_slider = true;
+						
+		        	}else{
+						rewind_slider = true;
+
+		        	}
+
+			        var collection_slider_li = document.createElement('li');
+			        	collection_slider_li.classList.add('glide__slides');
+			        	collection_slider_li.classList.add('thumb');
+			        	collection_slider_li.classList.add('slider_collection_art_'+ (j));
+		        		collection_slider_li.setAttribute('data-id', collection_holdings[i][j].artworkId);
+		        		collection_slider_li.setAttribute('data-index', j);
+		        		collection_slider_li.classList.add('bg_'+collection_holdings[i][j].artworkId);
+
+			        	collection_slider_li.id = 'collection_art_'+i+'_'+j;
+
+						if ( collection_holdings[i][j].expectedMediaType == 'Video' ){
+		        			collection_slider_li.setAttribute('data-mime', 'video');
+		        			collection_slider_li.style.backgroundImage = 'url('+cdn_url+'/'+collection_holdings[i][j].artworkId+'-pub/_thumb_large.jpg)';
+
+		        			var item_to_cache = cdn_url+'/'+collection_holdings[i][j].artworkId+'-pub/_main.mp4';
+
+		        			if( i == 0 ){
+								addToCache(cdn_url+'/'+collection_holdings[i][j].artworkId+'-pub/_main.mp4');
+		        			}
+		        			
+						}else{
+		        			collection_slider_li.setAttribute('data-mime', 'image');
+						    // collection_slider_li.style.backgroundImage = 'url('+cdn_root+collection_holdings[i][j].artworkId+'/'+profile_data.id+'/_full_uhd.jpg)';
+		        			collection_slider_li.style.backgroundImage = 'url('+cdn_url+'/'+collection_holdings[i][j].artworkId+'-pub/_thumb_large.jpg)';
+						    
+						}						
+
+						if( j == 0 ){
+							
+							var shares = "share(s)";
+
+							you_own.innerHTML = collection_holdings[0][0].sharesYouOwn +' '+shares;
+							you_paid.innerHTML = '$'+collection_holdings[0][0].purchasePricePerArtwork;
+
+
+							/*
+							if( art_data.holdings[i].bestimateValue == 0 ){
+								bestimate.innerHTML = 'N/A';
+							}else{
+								bestimate.innerHTML = currency+collection_holdings[0][0].bestimateValue;
+							}
+							*/
+
+							art_details_title.innerHTML = collection_holdings[0][0].title;
+							art_details_artist.innerHTML = collection_holdings[0][0].artistFirstName +' '+collection_holdings[0][0].artistLastName;
+							art_details_description.innerHTML = collection_holdings[0][0].artDescription;
+
+						}
+		        
+			        	collection_slider_li.style.backgroundPosition = 'center center';
+			        	collection_slider_li.style.backgroundSize = 'cover';
+			        	collection_slider_li.style.backgroundRepeat = 'no-repeat';
+
+
+					//Image tag to display images collection_img
+			        var collection_img = document.createElement('img');
+			        	collection_img.style.width = '339px';
+			        	collection_img.style.height = '190px';
+			        	collection_img.src = 'https://cdn.swyr.tv/channels/kbean/media/images/blank.png';
+
+
+			       	collection_slider_li.appendChild(collection_img);
+
+			        if( collection_img.getAttribute('src') != '' ){
+			        	collection_slider_ul.appendChild(collection_slider_li);
+			        }
+	        	}
+
+	        	document.body.appendChild(collection_row);
+
+				slider_collection_art[i] = new Glide('#'+collection_row.id.toString(), {
+					type: slide_type,
+					gap: gap,
+					animationDuration: 500,
+					animationTimingFunc: 'ease',
+					rewind: rewind_slider,
+					startAt: 0,
+					perView: 5,
+					peek: {
+						before: 0,
+						after: after
+					}
+				});
+
+				slider_collection_art[i].mount();
+				slide_to_push = eval(slider_collection_art[i]);
+				sliders.push(slide_to_push);
+
+				if( i != 0 ){
+
+					slider_collection_art[i].disable();
+
+				}
+
+				if( i == 0 ){
+					
+					giveFocus(collection_slider_ul.id);
+					active_slide = 0;
+
+				}
+
+				slider_collection_art[i].on(['mount.after', 'run'], function(){
+					
+					slideHandler();
+
+				});
+			}
+		}
+
+		function slideHandler(){
+
+			var shares = "share(s)";
+
+			var mime_data = document.getElementById('collection_art_'+active_slide+'_'+sliders[active_slide].index).getAttribute('data-mime');
+			var video_id = document.getElementById('collection_art_'+active_slide+'_'+sliders[active_slide].index).getAttribute('data-id');
+
+			if( mime_data == 'video' && fs == true ){
+				setTimeout(function(){
+					videoHandler('create', video_id, null);
+				}, 500);
+			}
+
+			if( active_slide == 0 ){
+
+				you_own.innerHTML = collection_holdings[0][+sliders[0].index].sharesYouOwn +' '+shares;
+				you_paid.innerHTML = '$'+collection_holdings[0][+sliders[0].index].purchasePricePerArtwork;
+
+				/*
+				if( collection_holdings[0][+sliders[0].index].bestimateValue == 0 ){
+					bestimate.innerHTML = 'N/A';
+				}else{
+					bestimate.innerHTML = currency+collection_holdings[0][+sliders[0].index].bestimateValue;
+				}
+				*/
+
+				art_details_title.innerHTML = collection_holdings[0][+sliders[0].index].title;
+				art_details_artist.innerHTML = collection_holdings[0][+sliders[0].index].artistFirstName +' '+collection_holdings[0][+sliders[0].index].artistLastName;
+				art_details_description.innerHTML = collection_holdings[0][+sliders[0].index].artDescription;
+
+			}else if(  active_slide > 0 ){
+
+				for( var i = 1; i < collection_holdings.length; i++ ){
+
+					if( getActiveElement() == 'collection_art_'+i ){
+
+						you_own.innerHTML = collection_holdings[i][+sliders[active_slide].index].sharesYouOwn +' '+shares;
+						you_paid.innerHTML = '$'+collection_holdings[i][+sliders[active_slide].index].purchasePricePerArtwork;
+
+						/*
+						if( collection_holdings[i][+sliders[active_slide].index].bestimateValue == 0 ){
+							bestimate.innerHTML = 'N/A';
+						}else{
+							bestimate.innerHTML = currency+collection_holdings[i][+sliders[active_slide].index].bestimateValue;
+						}
+						*/
+
+						art_details_title.innerHTML = collection_holdings[i][+sliders[active_slide].index].title;
+						art_details_artist.innerHTML = collection_holdings[i][+sliders[active_slide].index].artistFirstName +' '+collection_holdings[i][+sliders[active_slide].index].artistLastName;
+						art_details_description.innerHTML = collection_holdings[i][+sliders[active_slide].index].artDescription;
+
+					}
+				}
+			}
+		}
+
+		function isNumberKey(evt){
+
+			var charCode = (evt.which) ? evt.which : event.keyCode;
+
+			if (charCode > 31 && (charCode < 48 || charCode > 57)){
+				return false;
+			}else{
+				return true;
+			}
+		}
+
+		/**
+		 * START KEY HANDLERS	
+		 */
+		function keyPressed(key){
+			
+			if( key == 'back'){
+				div_spinner_wrapper.style.display="none";
+				exitFullScreen();
+				
+				
+				if (getActiveElement() == 'nav_my_collections' ){
+					appExitHandler();
+				}
+
+				if( getActiveElement() == "" && active_screen == 'auth_screen' ){
+					showClose();
+				}
+
+				if( getActiveElement() == "email"){
+					showClose();
+
+				}if( getActiveElement() == "device_name" ){
+					showClose();
+
+				}if( getActiveElement() == "auth_code" ){
+					showClose();
+				}
+
+				//button_add_device add_screen
+
+				
+				if( getActiveElement() == '' && active_screen == 'add_screen' ){
+					showClose();
+				}
+
+				if( getActiveElement() == 'button_add_device'){
+					showClose();
+				}
+
+
+				if( fs == false  && target_slide != 0  && animating == false && active_screen == 'art_screen'  ){
+
+					animating = true;
+
+					if( (active_slide - 1) < sliders.length ){
+
+						var shares = "share(s)";
+
+						you_own.innerHTML = collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].sharesYouOwn +' '+shares;
+						you_paid.innerHTML = '$'+collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].purchasePricePerArtwork;
+
+
+						/*
+						if( collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].bestimateValue == 0 ){
+							bestimate.innerHTML = 'N/A';
+						}else{
+							bestimate.innerHTML = currency+collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].bestimateValue;
+						}
+						*/
+
+						art_details_title.innerHTML = collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].title;
+						art_details_artist.innerHTML = collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].artistFirstName +' '+collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].artistLastName;
+						art_details_description.innerHTML = collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].artDescription;
+
+
+						for( var i = 0; i < sliders.length; i++ ){
+							var from_top = document.getElementsByClassName('fade_selector')[i].getBoundingClientRect();
+							gsap.to(document.getElementsByClassName('fade_selector')[i], { duration:0.4, top: (from_top.top + (to_bottom + gsap_mod)), onStart: disableSlides(i), onComplete: function(){
+								enableSlides(i);
+								animating = false;
+							} });
+						}
+
+						active_slide--;
+						target_slide--;
+
+						giveFocus('collection_art_'+target_slide);
+
+						if( target_slide == 0 ){
+							collection_name.innerHTML = 'All Art';
+
+						}else{
+							var target = target_slide - 1;
+							collection_name.innerHTML = profile_data.collections[target].collectionName;
+						}
+					}
+				}
+
+				if( getActiveElement() == '' && active_screen == 'art_screen' ){
+					giveFocus('nav_my_collections');
+					document.getElementById('nav_my_collections').classList.add('active_nav');
+					sliders[0].disable();
+				}
+
+				if( getActiveElement() == 'collection_art_0' && fs == false  && target_slide == 0  && animating == false && active_screen == 'art_screen'  ){
+					giveFocus('nav_my_collections');
+					document.getElementById('nav_my_collections').classList.add('active_nav');
+					document.getElementById("thumb_border").style.visibility = 'hidden';
+					sliders[0].disable();
+				}
+
+				if (getActiveElement() == 'nav_refresh' ){
+					giveFocus('nav_my_collections');
+					document.getElementById('nav_refresh').classList.remove('active_nav');
+					document.getElementById('nav_my_collections').classList.add('active_nav');
+					sliders[0].disable();
+				}
+				if (getActiveElement() == 'nav_settings' ){
+					giveFocus('nav_refresh');
+					document.getElementById('nav_settings').classList.remove('active_nav');
+					document.getElementById('nav_refresh').classList.add('active_nav');
+					renderScreen('art_screen');
+					clearScreen('settings_screen');
+					sliders[0].disable();
+				}
+				
+				if(getActiveElement() == '15s'){
+					giveFocus('nav_refresh');
+					document.getElementById('nav_settings').classList.remove('active_nav');
+					document.getElementById('nav_refresh').classList.add('active_nav');
+					renderScreen('art_screen');
+					clearScreen('settings_screen');
+					sliders[0].disable();
+				}
+				if((getActiveElement() == '30s' || getActiveElement() == '1m' || getActiveElement() == '5m' || getActiveElement() == '10m' || getActiveElement() == '15m' || getActiveElement() == '30m' || getActiveElement() == '1h') && active_screen == 'settings_screen' ){
+					giveFocus('nav_refresh');
+					document.getElementById('nav_settings').classList.remove('active_nav');
+					document.getElementById('nav_refresh').classList.add('active_nav');
+					renderScreen('art_screen');
+					clearScreen('settings_screen');
+					sliders[0].disable();
+				}
+				if(getActiveElement() == 'mat_0'){
+					giveFocus('nav_refresh');
+					document.getElementById('nav_settings').classList.remove('active_nav');
+					document.getElementById('nav_refresh').classList.add('active_nav');
+					renderScreen('art_screen');
+					clearScreen('settings_screen');
+					sliders[0].disable();
+				}
+				if( (getActiveElement() == 'mat_1' || getActiveElement() == 'mat_2' ) && active_screen == 'settings_screen' ){
+					giveFocus('nav_refresh');
+					document.getElementById('nav_settings').classList.remove('active_nav');
+					document.getElementById('nav_refresh').classList.add('active_nav');
+					renderScreen('art_screen');
+					clearScreen('settings_screen');
+					sliders[0].disable();
+				}
+				if( getActiveElement() == 'log_out' ){
+					giveFocus('nav_refresh');
+					document.getElementById('nav_settings').classList.remove('active_nav');
+					document.getElementById('nav_refresh').classList.add('active_nav');
+					renderScreen('art_screen');
+					clearScreen('settings_screen');
+					sliders[0].disable();
+				}
+			}
+			
+			if( key == 'right' && getActiveElement() == 'nav_my_collections' ){
+
+				giveFocus('nav_refresh');
+				document.getElementById('nav_my_collections').classList.remove('active_nav');
+				document.getElementById('nav_refresh').classList.add('active_nav');
+				sliders[0].disable();
+
+			}else if( key == 'right' && getActiveElement() == 'nav_refresh' ){
+
+				giveFocus('nav_settings');
+				document.getElementById('nav_settings').classList.add('active_nav');
+				document.getElementById('nav_refresh').classList.remove('active_nav');
+				renderScreen('settings_screen');
+				clearScreen('art_screen');
+				sliders[0].disable();
+
+			}
+
+			if( key == 'left' && getActiveElement() == 'nav_settings' ){
+
+				giveFocus('nav_refresh');
+				document.getElementById('nav_settings').classList.remove('active_nav');
+				document.getElementById('nav_refresh').classList.add('active_nav');
+				renderScreen('art_screen');
+				clearScreen('settings_screen');
+				sliders[0].disable();
+
+			}else if( key == 'left' && getActiveElement() == 'nav_refresh' ){
+
+				giveFocus('nav_my_collections');
+				document.getElementById('nav_refresh').classList.remove('active_nav');
+				document.getElementById('nav_my_collections').classList.add('active_nav');
+				sliders[0].disable();
+
+			}
+
+
+			if( key == 'right' ){
+
+            	vid = document.querySelector('.video-player');
+
+            	if( document.body.contains(vid) ){
+	            	videoHandler('destroy', vid.id, null);
+	            	giveFocus(from_focus);
+	            	sliders[active_slide].enable();
+	            	sliders[active_slide].go('>');
+            	}
+			}
+
+			if( key == 'left' ){
+
+            	vid = document.querySelector('.video-player');
+
+            	if( document.body.contains(vid) ){
+	            	videoHandler('destroy', vid.id, null);
+	            	giveFocus(from_focus);
+	            	sliders[active_slide].enable();
+	            	sliders[active_slide].go('<');
+            	}
+			}
+
+			if( key == 'right' && getActiveElement() == 'exit_yes' ){
+				giveFocus('exit_no');
+			}
+
+			if( key == 'left' && getActiveElement() == 'exit_no' ){
+				giveFocus('exit_yes');
+			}
+
+			if( key == 'right' && active_screen == 'settings_screen' ){
+
+				if( getActiveElement() == '15s' ){
+					giveFocus('30s');
+
+				}else if( getActiveElement() == '30s' ){
+					giveFocus('1m');
+
+				}else if( getActiveElement() == '1m' ){
+					giveFocus('5m');
+
+				}else if( getActiveElement() == '5m' ){
+					giveFocus('10m');
+
+				}else if( getActiveElement() == '10m' ){
+					giveFocus('15m');
+					
+				}else if( getActiveElement() == '15m' ){
+					giveFocus('30m');
+					
+				}else if( getActiveElement() == '30m' ){
+					giveFocus('1h');
+					
+				}else if( getActiveElement() == '1h' ){
+					giveFocus('15s');
+					
+				}else if( getActiveElement() == 'mat_0' ){
+					giveFocus('mat_1');
+
+				}else if( getActiveElement() == 'mat_1' ){
+					giveFocus('mat_2');
+
+				}else if( getActiveElement() == 'mat_2' ){
+					giveFocus('mat_0');
+
+				}
+			}
+
+			if( key == 'left' && active_screen == 'settings_screen' ){
+
+				if( getActiveElement() == '15s' ){
+					giveFocus('1h');
+
+				}else if( getActiveElement() == '1h' ){
+					giveFocus('30m');
+
+				}else if( getActiveElement() == '30m' ){
+					giveFocus('15m');
+
+				}else if( getActiveElement() == '15m' ){
+					giveFocus('10m');
+
+				}else if( getActiveElement() == '10m' ){
+					giveFocus('5m');
+					
+				}else if( getActiveElement() == '5m' ){
+					giveFocus('1m');
+					
+				}else if( getActiveElement() == '1m' ){
+					giveFocus('30s');
+					
+				}else if( getActiveElement() == '30s' ){
+					giveFocus('15s');
+					
+				}else if( getActiveElement() == 'mat_0' ){
+					giveFocus('mat_2');
+
+				}else if( getActiveElement() == 'mat_2' ){
+					giveFocus('mat_1');
+
+				}else if( getActiveElement() == 'mat_1' ){
+					giveFocus('mat_0');
+
+				}
+			}
+
+			if( key == 'down' ){
+
+				if( getActiveElement() == "" && active_screen == 'auth_screen' ){
+					giveFocus('auth_button');
+				}
+
+				if( getActiveElement() == "email"){
+					giveFocus("device_name");
+
+				}else if( getActiveElement() == "device_name" ){
+					giveFocus("auth_code");
+
+				}else if( getActiveElement() == "auth_code" ){
+					giveFocus("auth_button");
+
+				}
+
+				if( getActiveElement() == 'nav_my_collections' ){
+
+					sliders[0].enable();
+					giveFocus('collection_art_0');
+	        		document.getElementById("thumb_border").style.visibility = 'visible';
+			
+				}else if( getActiveElement() != 'nav_refresh' && fs == false && animating == false && active_screen == 'art_screen' ){
+
+					animating = true;
+
+					if( (active_slide + 1) < sliders.length ){
+
+						var shares = "share(s)";
+
+						you_own.innerHTML = collection_holdings[(target_slide + 1)][sliders[(target_slide + 1)].index].sharesYouOwn +' '+shares;
+						you_paid.innerHTML = '$'+collection_holdings[(target_slide + 1)][sliders[(target_slide + 1)].index].purchasePricePerArtwork;
+
+
+						/*
+						if( collection_holdings[(target_slide + 1)][sliders[(target_slide + 1)].index].bestimateValue == 0 ){
+							bestimate.innerHTML = 'N/A';
+						}else{
+							bestimate.innerHTML = currency+collection_holdings[(target_slide + 1)][sliders[(target_slide + 1)].index].bestimateValue;
+						}
+						*/
+
+						art_details_title.innerHTML = collection_holdings[(target_slide + 1)][sliders[(target_slide + 1)].index].title;
+						art_details_artist.innerHTML = collection_holdings[(target_slide + 1)][sliders[(target_slide + 1)].index].artistFirstName +' '+collection_holdings[(target_slide + 1)][sliders[(target_slide + 1)].index].artistLastName;
+						art_details_description.innerHTML = collection_holdings[(target_slide + 1)][sliders[(target_slide + 1)].index].artDescription;
+
+						
+						for( var i = 0; i < sliders.length; i++ ){
+								var from_top = document.getElementsByClassName('fade_selector')[i].getBoundingClientRect();
+								gsap.to(document.getElementsByClassName('fade_selector')[i], { duration:0.4, top: (from_top.top + (to_top - gsap_mod)), onStart: disableSlides(i), onComplete: function(){
+									enableSlides(i);
+									animating = false;
+								} });
+						}
+									
+						active_slide++;
+						target_slide++;
+
+						giveFocus('collection_art_'+target_slide);
+
+						if( target_slide == 0 ){
+							collection_name.innerHTML = 'All Art';
+
+						}else{
+							var target = target_slide - 1;
+							collection_name.innerHTML = profile_data.collections[target].collectionName;
+						}
+
+					}else{
+
+						/* console.log('stop scrolling'); */
+						animating = false;
+
+					}
+				}
+
+				if( getActiveElement() == 'nav_settings' && active_screen == 'settings_screen' ){
+					giveFocus('15s');
+
+				}else if( (getActiveElement() == '15s' || getActiveElement() == '30s' || getActiveElement() == '1m' || getActiveElement() == '5m' || getActiveElement() == '10m' || getActiveElement() == '15m' || getActiveElement() == '30m' || getActiveElement() == '1h') && active_screen == 'settings_screen' ){
+					giveFocus('mat_0')
+
+				}else if( (getActiveElement() == 'mat_0' || getActiveElement() == 'mat_1' || getActiveElement() == 'mat_2' ) && active_screen == 'settings_screen' ){
+					giveFocus('log_out');
+				}
+			}
+
+			if( key == 'up' ){
+
+				if( getActiveElement() == "" && active_screen == 'auth_screen' ){
+					giveFocus('auth_button');
+				}
+
+				if( getActiveElement() == "auth_button"){
+					giveFocus("auth_code");
+
+				}else if( getActiveElement() == "auth_code" ){
+					giveFocus("device_name");
+
+				}else if( getActiveElement() == "device_name" ){
+					giveFocus("email");
+
+				}
+
+				if( fs == false  && target_slide != 0  && animating == false && active_screen == 'art_screen'  ){
+
+					animating = true;
+
+					if( (active_slide - 1) < sliders.length ){
+
+						var shares = "share(s)";
+
+						you_own.innerHTML = collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].sharesYouOwn +' '+shares;
+						you_paid.innerHTML = '$'+collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].purchasePricePerArtwork;
+
+
+						/*
+						if( collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].bestimateValue == 0 ){
+							bestimate.innerHTML = 'N/A';
+						}else{
+							bestimate.innerHTML = currency+collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].bestimateValue;
+						}
+						*/
+
+						art_details_title.innerHTML = collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].title;
+						art_details_artist.innerHTML = collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].artistFirstName +' '+collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].artistLastName;
+						art_details_description.innerHTML = collection_holdings[(target_slide - 1)][sliders[(target_slide - 1)].index].artDescription;
+
+						
+						for( var i = 0; i < sliders.length; i++ ){
+							var from_top = document.getElementsByClassName('fade_selector')[i].getBoundingClientRect();
+							gsap.to(document.getElementsByClassName('fade_selector')[i], { duration:0.4, top: (from_top.top + (to_bottom + gsap_mod)), onStart: disableSlides(i), onComplete: function(){
+								enableSlides(i);
+								animating = false;
+							} });
+						}
+									
+						active_slide--;
+						target_slide--;
+
+						giveFocus('collection_art_'+target_slide);
+
+						if( target_slide == 0 ){
+							collection_name.innerHTML = 'All Art';
+
+						}else{
+							var target = target_slide - 1;
+							collection_name.innerHTML = profile_data.collections[target].collectionName;
+						}
+
+						
+
+					}
+				}
+
+				if( getActiveElement() == '' && active_screen == 'art_screen' ){
+					giveFocus('nav_my_collections');
+					document.getElementById('nav_my_collections').classList.add('active_nav');
+					sliders[0].disable();
+				}
+
+				if( getActiveElement() == 'collection_art_0' && fs == false  && target_slide == 0  && animating == false && active_screen == 'art_screen'  ){
+					giveFocus('nav_my_collections');
+					document.getElementById('nav_my_collections').classList.add('active_nav');
+        			document.getElementById("thumb_border").style.visibility = 'hidden';
+					sliders[0].disable();
+				}
+
+				if( (getActiveElement() == '15s' || getActiveElement() == '30s' || getActiveElement() == '1m' || getActiveElement() == '5m' || getActiveElement() == '10m' || getActiveElement() == '15m' || getActiveElement() == '30m' || getActiveElement() == '1h') && active_screen == 'settings_screen' ){
+					giveFocus('nav_settings');
+					document.getElementById('nav_settings').classList.add('active_nav');
+					document.getElementById('nav_my_collections').classList.remove('active_nav');
+
+				}
+
+				if( (getActiveElement() == 'mat_0' || getActiveElement() == 'mat_1' || getActiveElement() == 'mat_2' ) && active_screen == 'settings_screen' ){
+					giveFocus('15s');
+
+				}
+
+				if( getActiveElement() == 'log_out' ){
+
+					giveFocus('mat_0');
+				}
+			}
+
+
+			if( key == 'enter' ){
+
+				if( fs == false ){
+					enterFullScreen();
+
+				}else if( fs == true ){
+
+					var video_player = document.querySelector('.video-player');
+
+					if( document.body.contains(video_player) == false ){
+						thumbZoom();
+					}
+				}
+
+				if( getActiveElement() == 'exit_yes' ){
+		            exitApp();
+				}
+
+				if( getActiveElement() == 'nav_refresh' ){
+		            refreshArt();
+				}
+
+				if( getActiveElement() == 'exit_no' ){
+					cancelClose();
+				}
+
+				if( active_screen == 'settings_screen' ){
+
+					var mat_thumbs = document.getElementsByClassName('mat-thumb');
+					var speed_buttons = document.getElementsByClassName('speed_button');
+
+					if( getActiveElement() == 'mat_0' ){
+
+						for( i = 0; i < mat_thumbs.length; i++ ){
+							mat_thumbs[i].classList.remove('active_border');
+						}
+
+						document.getElementById(getActiveElement()).classList.add('active_border');
+
+						localStorage.slider_mat = null;
+						checkSettings();
+						saved('saved_mat');
+
+
+					}else if( getActiveElement() == 'mat_1' ){
+
+						for( i = 0; i < mat_thumbs.length; i++ ){
+							mat_thumbs[i].classList.remove('active_border');
+						}
+
+						document.getElementById(getActiveElement()).classList.add('active_border');
+
+						localStorage.slider_mat = 'white-mat-board.png';
+						checkSettings();
+						saved('saved_mat');
+
+
+					}else if( getActiveElement() == 'mat_2' ){
+
+						for( i = 0; i < mat_thumbs.length; i++ ){
+							mat_thumbs[i].classList.remove('active_border');
+						}
+
+						document.getElementById(getActiveElement()).classList.add('active_border');
+
+						localStorage.slider_mat = 'black-mat-board.png';
+						checkSettings();
+						saved('saved_mat');
+
+					}
+
+
+
+					if( getActiveElement() == '15s' ){
+
+						for( i = 0; i < speed_buttons.length; i++ ){
+							speed_buttons[i].classList.remove('active');
+						}
+
+						document.getElementById(getActiveElement()).classList.add('active');
+						checkSettings();
+						saved('saved_speed');
+
+						localStorage.slider_timer = 15000;
+
+					}else if( getActiveElement() == '30s' ){
+
+						for( i = 0; i < speed_buttons.length; i++ ){
+							speed_buttons[i].classList.remove('active');
+						}
+
+						document.getElementById(getActiveElement()).classList.add('active');
+						checkSettings();
+						saved('saved_speed');
+
+						localStorage.slider_timer = 30000;
+
+					}else if( getActiveElement() == '1m' ){
+
+						for( i = 0; i < speed_buttons.length; i++ ){
+							speed_buttons[i].classList.remove('active');
+						}
+
+						document.getElementById(getActiveElement()).classList.add('active');
+						checkSettings();
+						saved('saved_speed');
+
+						localStorage.slider_timer = 60000;
+						
+
+					}else if( getActiveElement() == '5m' ){
+
+						for( i = 0; i < speed_buttons.length; i++ ){
+							speed_buttons[i].classList.remove('active');
+						}
+
+						document.getElementById(getActiveElement()).classList.add('active');
+						checkSettings();
+						saved('saved_speed');
+
+						localStorage.slider_timer = 300000;
+						
+
+					}else if( getActiveElement() == '10m' ){
+
+						for( i = 0; i < speed_buttons.length; i++ ){
+							speed_buttons[i].classList.remove('active');
+						}
+
+						document.getElementById(getActiveElement()).classList.add('active');
+						checkSettings();
+						saved('saved_speed');
+
+						localStorage.slider_timer = 600000;
+						
+					}else if( getActiveElement() == '15m' ){
+
+						for( i = 0; i < speed_buttons.length; i++ ){
+							speed_buttons[i].classList.remove('active');
+						}
+
+						document.getElementById(getActiveElement()).classList.add('active');
+						checkSettings();
+						saved('saved_speed');
+
+						localStorage.slider_timer = 900000;						
+
+						
+					}else if( getActiveElement() == '30m' ){
+
+						for( i = 0; i < speed_buttons.length; i++ ){
+							speed_buttons[i].classList.remove('active');
+						}
+
+						document.getElementById(getActiveElement()).classList.add('active');
+						checkSettings();
+						saved('saved_speed');
+
+						localStorage.slider_timer = 3600000
+						
+					}else if( getActiveElement() == '1h' ){
+
+						for( i = 0; i < speed_buttons.length; i++ ){
+							speed_buttons[i].classList.remove('active');
+						}
+
+						document.getElementById(getActiveElement()).classList.add('active');
+						checkSettings();
+						saved('saved_speed');
+
+						localStorage.slider_timer = 3600000
+						
+					}
+
+					if( getActiveElement() == 'log_out' ){
+						logOut();
+
+					}
+
+				}
+
+				if( getActiveElement() == "button_add_device"){
+					renderScreen("auth_screen");
+				}
+			}
+
+			/*
+			if( key == 'escape'){
+            	appExitHandler();
+			}
+			*/
+		}
+
+		function refreshArt(){
+
+			showRefresh();
+			firstRender = true;
+			refreshed = true;
+			sliders = [];
+			active_slide = 0;
+			getArt();
+
+		}
+
+		function thumbZoom(){
+
+			for( var i = 0; i < collection_holdings.length; i++ ){
+
+				if( getActiveElement() == 'collection_art_'+i ){
+
+					var slider_ul = document.getElementById('collection_art_'+i);
+
+					var mime_data = document.getElementById('collection_art_'+i+'_'+sliders[i].index).getAttribute('data-mime');
+					var data_id = document.getElementById('collection_art_'+i+'_'+sliders[i].index).getAttribute('data-id');
+
+
+					if( mime_data == 'image' ){
+						if( art_size == 'cover' ){
+							art_size = 'contain';
+
+							for( var j = 0; j < slider_ul.children.length; j++ ){
+								slider_ul.children[j].style.backgroundSize = art_size;
+							}
+
+						}else if( art_size == 'contain' ){
+							art_size = 'cover';
+
+							for( var j = 0; j < slider_ul.children.length; j++ ){
+								slider_ul.children[j].style.backgroundSize = art_size;
+							}
+						}
+					}else if( mime_data == 'video' ){
+						videoHandler('create', data_id, null);
+					}
+				}
+			}
+		}
+
+		function enterFullScreen(){
+
+			if( getPlatform() == 'android' ){
+				disableScreensaver();
+			}
+
+			from_focus = getActiveElement();
+
+			for( var i = 0; i < collection_holdings.length; i++ ){
+
+				if( getActiveElement() == 'collection_art_'+i ){
+
+
+					//div_spinner_wrapper.style.display="flex";
+
+					var data_mime = document.getElementById('collection_art_'+i+'_'+sliders[i].index).getAttribute('data-mime');
+					var data_id = document.getElementById('collection_art_'+i+'_'+sliders[i].index).getAttribute('data-id');
+
+					if( data_mime == 'image' ){
+
+						fs = true;
+
+						var slider = document.getElementById('slider_collection_art_'+i);
+							slider.classList.add('fullscreen-slider');
+
+						var slider_ul = document.getElementById('collection_art_'+i);
+
+						for( var j = 0; j < slider_ul.children.length; j++ ){
+							slider_ul.children[j].classList.add('fullview');
+							slider_ul.children[j].style.backgroundSize = 'contain';
+
+							if( slider_ul.children[j].getAttribute('data-mime') == 'image' ){
+								if( localStorage.getItem('type') == 'demo' ){
+									div_spinner_wrapper.style.display="flex";
+						    		// slider_ul.children[j].style.backgroundImage = 'url('+cdn_root+'/'+collection_holdings[i][j].artworkId+'-vault/_full_uhd.jpg)';
+						    		// slider_ul.children[j].style.backgroundImage = 'url('+cdn_root+collection_holdings[i][j].artworkId+'/'+profile_data.id+'/_full_uhd.jpg)';
+						    		slider_ul.children[j].style.backgroundImage = 'url(https://swayer.blob.core.windows.net/'+collection_holdings[i][j].artworkId+'-vault/_full_uhd.jpg)';
+									var src = slider_ul.children[j].style.backgroundImage;
+									var url = src.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
+									//var url = 'https://swayer.blob.core.windows.net/'+collection_holdings[i][j].artworkId+'-vault/_full_uhd.jpg';
+
+									var img = new Image();
+									img.onload = () =>{
+										div_spinner_wrapper.style.display="none";
+									}
+									img.src = url;
+									if (img.complete){
+										//img.onload();
+										div_spinner_wrapper.style.display="none";
+									}
+									//div_spinner_wrapper.style.display="none";
+
+								}else{
+									div_spinner_wrapper.style.display="flex";
+						    		slider_ul.children[j].style.backgroundImage = 'url('+cdn_root+collection_holdings[i][j].artworkId+'/'+profile_data.id+'/_full_uhd.jpg)';
+						    		var src = slider_ul.children[j].style.backgroundImage;
+									var url = src.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
+									//var url = 'https://swayer.blob.core.windows.net/'+collection_holdings[i][j].artworkId+'-vault/_full_uhd.jpg';
+
+									var img = new Image();
+									img.onload = () =>{
+										div_spinner_wrapper.style.display="none";
+									}
+									img.src = url;
+									if (img.complete){
+										//img.onload();
+										div_spinner_wrapper.style.display="none";
+									}
+								}
+							}
+						}
+
+						art_size = 'contain';
+
+						if( mat != "null" ){
+							fs_mat.style.backgroundImage = 'url(https://cdn.swyr.tv/channels/kbean/media/images/'+mat+')';
+							fs_mat.style.display = 'block';
+						}else{
+							/* no mat */
+						}
+
+						sliders[i].update({
+							type: 'carousel',
+							gap: 0,
+							autoplay: timer,
+							perView: 1,
+							peek: {
+								before:0,
+								after:0
+							}
+						});
+
+					}else if( data_mime == 'video' ){
+						//videoHandler('create', data_id, null);
+						//thumbZoom();
+
+						fs = true;
+
+						var slider = document.getElementById('slider_collection_art_'+i);
+							slider.classList.add('fullscreen-slider');
+
+						var slider_ul = document.getElementById('collection_art_'+i);
+
+						for( var j = 0; j < slider_ul.children.length; j++ ){
+							slider_ul.children[j].classList.add('fullview');
+							slider_ul.children[j].style.backgroundSize = 'contain';
+
+							
+
+							if( slider_ul.children[j].getAttribute('data-mime') == 'video' ){
+
+
+
+								/*
+								$('#myBlock').vide({
+								mp4: path/to/video1,
+								webm: path/to/video2,
+								ogv: path/to/video3,
+								poster: path/to/poster
+								}
+								*/
+								
+								
+								
+								div_spinner_wrapper.style.display="flex";
+								//slider_ul.children[j].style.backgroundImage = 'url('+cdn_root+collection_holdings[i][j].artworkId+'/'+profile_data.id+'/_full_uhd.jpg)';
+								
+								slider_ul.children[j].vide(cdn_root+collection_holdings[i][j].artworkId+'/'+profile_data.id;	//+'/_full_uhd.jpg');
+								var src = cdn_root+collection_holdings[i][j].artworkId+'/'+profile_data.id+'/_full_uhd.jpg'
+								var url = src.match(/\((.*?)\)/)[1].replace(/('|")/g,'');
+								//var url = 'https://swayer.blob.core.windows.net/'+collection_holdings[i][j].artworkId+'-vault/_full_uhd.jpg';
+								
+								var img = new Video();
+								img.onload = () =>{
+									div_spinner_wrapper.style.display="none";
+								}
+								img.src = url;
+								if (img.complete){
+									//img.onload();
+									div_spinner_wrapper.style.display="none";
+								}
+								div_spinner_wrapper.style.display="none";
+									
+								//slider_ul.children[j].style.backgroundImage = 'url('+cdn_root+collection_holdings[i][j].artworkId+'/'+profile_data.id+'/_full_uhd.jpg)';
+							
+							}
+
+						}
+
+						art_size = 'contain';
+
+						if( mat != null ){
+							fs_mat.style.backgroundImage = 'url(https://cdn.swyr.tv/channels/kbean/media/images/'+mat+')';
+							fs_mat.style.display = 'block';
+						}
+
+						sliders[i].update({
+							type: 'carousel',
+							gap: 0,
+							autoplay: timer,
+							perView: 1,
+							peek: {
+								before:0,
+								after:0
+							}
+						});
+					}
+				}
+			}
+		}
+
+		function exitFullScreen(){
+
+			fs = false;
+
+			art_size = 'contain';
+
+            vid = document.querySelector('.video-player');
+
+            if( document.body.contains(vid) ){
+            	videoHandler('destroy', vid.id, null);
+            	giveFocus(from_focus);
+            }
+
+			if( getPlatform() == 'android' ){
+				enableScreensaver();
+			}
+
+			var thumbs = document.getElementsByClassName('thumb');
+
+			for( var i = 0; i < thumbs.length; i++ ){
+				thumbs[i].style.backgroundSize = 'cover';
+				thumbs[i].style.backgroundImage = 'url('+cdn_url+'/'+thumbs[i].getAttribute('data-id')+'-pub/_thumb_large.jpg)';	
+
+			}
+
+			art_size = 'cover';
+
+			if( document.querySelector('.fullscreen-slider') != null ){
+				document.querySelector('.fullscreen-slider').classList.remove('fullscreen-slider');
+			}
+
+			var slider_ul = document.getElementById('collection_art_'+target_slide);
+
+			for( var j = 0; j < slider_ul.children.length; j++ ){
+				slider_ul.children[j].classList.remove('fullview');
+				art_size = 'cover';
+				slider_ul.children[j].backgroundSize = art_size;
+			}
+
+			fs_mat.style.display = 'none';
+
+			sliders[(target_slide)].update({
+				type: 'slider',
+				gap: gap,
+				autoplay: false,
+				perView: 5,
+				peek: {
+					before:0,
+					after:after
+				}
+			});
+		}
+
+		function disableSlides(once){
+
+			// animating = true;
+
+			for( var i = 0; i < sliders.length; i++ ){
+				sliders[i].disable();
+				sliders[i].update({
+					keyboard : false
+				}); 
+			}
+
+			// setTimeout(function(){
+			// 	animating = false;
+			// }, 250);			
+		}
+
+		function enableSlides(once){
+
+			sliders[active_slide].enable();
+
+			sliders[active_slide].update({
+				keyboard : true
+			}); 
+		}
+
+		/*
+         * returns the ID of the current focus element to understand state and section for handling
+         * @method getActiveElement
+         */
+        function getActiveElement(){
+            active = document.activeElement.id;
+            return active; 
+        }
+
+        /**
+         * handles all key events // TODO add gamepad support
+         * @method setupKeyHandler
+         */
+        function setupKeyHandler(remove){
+            var remoteHandler = function(evt) {
+                evt = evt || window.event;
+                switch (evt.keyCode) {
+                    case 38:
+                        keyPressed('up');
+                        break;
+                    case 40:
+                        keyPressed('down');
+
+                        break;
+                    case 13:
+					
+						/*
+						if(document.activeElement.type == 'submit'){
+							//evt.preventDefault();
+							sendAuth();
+						}
+						if(document.activeElement.id == 'auth_button'){
+							//evt.preventDefault();
+							sendAuth();
+						}
+						*/
+						if( document.activeElement.id == "email"){
+							evt.preventDefault();
+							//giveFocus("device_name");
+						}
+						if( document.activeElement.id  == "device_name" ){
+							evt.preventDefault();
+							//giveFocus("auth_code");
+						}
+						if( document.activeElement.id  == "auth_code" ){
+							evt.preventDefault();
+							//giveFocus("auth_button");
+							//sendAuth();
+						}
+						else{
+							//evt.preventDefault();
+							keyPressed('enter');
+						}
+                         break;
+                    case 37:
+                        keyPressed('left');
+
+                        break;
+                    case 39:
+                        keyPressed('right');
+						break;
+                    /*
+                    case 27:
+                    	keyPressed('escape');
+						break;
+					*/
+ 					case 461:
+						keyPressed('back');
+ 						break;
+ 					case 10009:
+ 						//Back key case for Tizen
+ 						if (getActiveElement() == 'nav_my_collections' ){
+							appExitHandler();
+						}
+						else{
+							evt.preventDefault();
+							keyPressed('back');
+	 						break;
+	 					}
+					}
+            };
+
+            if (remove){
+                top.removeEventListener('click', remoteHandler);
+                window.removeEventListener('click', remoteHandler);                
+                top.removeEventListener('keyup', remoteHandler);
+                window.removeEventListener('keyup', remoteHandler);
+                parent.BL.cleanUp = null;
+                selectionHandler = function(){console.log("no selection handler")};
+                
+            }else{
+                top.addEventListener('click', remoteHandler);
+                window.addEventListener('click', remoteHandler);                
+                top.addEventListener('keyup', remoteHandler);
+                window.addEventListener('keyup', remoteHandler);
+            }
+        }
+		/**
+		 * END KEY HANDLERS	
+		 */
+
+
+        function appExitHandler(){
+
+            if( fs == false && close_up == false ){
+        		showClose();
+
+            }else if( fs == true ){
+            	exitFullScreen();
+
+            }
+        }
+
+		/* event listeners */
+
+		if( getPlatform() == 'android' ){
+
+			window.addEventListener("load", function(){
+			    window.addEventListener("popstate", function(){
+			        if ( window.history.state !== "backhandler" ){
+			            /* put your back handler code here */
+
+			            appExitHandler();
+			            window.history.pushState("backhandler", null, null);
+			        }
+			    });
+
+			    window.history.pushState("backhandler", null, null);
+			});
+		}else{
+
+		}
+
+		document.addEventListener('DOMContentLoaded', function(event){
+			checkSettings();
+			checkCache("logo_loader");
+			setupKeyHandler();
+
+		});
+
+		var backEventListener = null;
+		var unregister = function() {
+		    if ( backEventListener !== null ) {
+		        document.removeEventListener( 'tizenhwkey', backEventListener );
+		        backEventListener = null;
+		        window.tizen.application.getCurrentApplication().exit();
+		    }
+		}
+
+		//Initialize function
+		var initTizen = function () {
+		    // register once
+		    if ( backEventListener !== null ) {
+		        return;
+		    }
+		    
+		    // TODO:: Do your initialization job
+		    var backEvent = function(e) {
+		        if ( e.keyName == "back" ) {
+		        	//appExitHandler();
+		        }
+		    }
+		    
+		    // add eventListener for tizenhwkey (Back Button)
+		    document.addEventListener('tizenhwkey', backEvent);
+		    backEventListener = backEvent;
+		};
+
+		// document.addEventListener('pageinit', initTizen);
+		document.addEventListener('unload', unregister);
+
+		if( getPlatform() == 'tizen'){
+			initTizen();
+		}
+
+		(function(){
+
+			window.addEventListener('tizenhwkey', function(ev){
+				if( ev.keyName === 'back' ){
+					try{
+						tizen.application.getCurrentApplication().exit();
+					}catch(ignore){}
+				}
+			});
+		});
+
+	    /**
+	    * returns the platform to determine what bridging to use (Android or other)
+	    * @method getPlatform
+	    */
+	    function getPlatform(){
+	        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+	        if( /android/i.test(userAgent) ){
+	            return "android";
+
+	        }else if( /Tizen/i.test(userAgent) ){
+	            return "tizen";
+
+	        }
+
+	        return userAgent;
+	    }
+
+	    function log(message){
+	    	var debug_ul = document.getElementById('debug_ul');
+
+	    	var li = document.createElement('li');
+	    	var message_text = document.createTextNode(message);
+
+	    	li.appendChild(message_text);
+	    	debug_ul.appendChild(li);
+	    }
+
+        function disableScreensaver(){
+        	log("screensaver disabled");
+            /* call native method */
+            window.WebViewJavascriptBridge.callHandler(
+                'onBridgeCmdReceived'
+                , {'cmd': 'onScreenSaverDisabled'}
+                , function(responseData) {
+                    log("send get responseData from java, data = " + responseData);
+                }
+            );
+        }
+
+        function enableScreensaver(){
+        	log("screensaver enabled");
+            /* call native method */
+            window.WebViewJavascriptBridge.callHandler(
+                'onBridgeCmdReceived'
+                , {'cmd': 'onScreenSaverEnabled'}
+                , function(responseData) {
+                    log("send get responseData from java, data = " + responseData);
+                }
+            );
+        }
+
+        function exitApp(){
+            /* call native method */
+
+            document.body.innerHTML = '';
+
+			caches.delete(cacheName).then(function(boolean) {
+				console.log('cache is deleted');
+			});
+
+            if( getPlatform() == 'android' ){
+
+	            window.WebViewJavascriptBridge.callHandler(
+	                'onBridgeCmdReceived'
+	                , {'cmd': 'onExitApp'}
+	                , function(responseData) {
+	                   log("send get responseData from java, data = " + responseData);
+	                }
+	            );
+
+            }else if( getPlatform() == 'tizen' ){
+
+            	unregister();
+            }
+        }
+
+	    if( getPlatform() == 'android' ){
+	        /* FireTV and Android TV */
+
+	        function connectWebViewJavascriptBridge(allback) {
+	            if (window.WebViewJavascriptBridge) {
+	                callback(WebViewJavascriptBridge)
+	            } else {
+	                document.addEventListener(
+	                    'WebViewJavascriptBridgeReady'
+	                    , function() {
+	                        callback(WebViewJavascriptBridge)
+	                    },
+	                    false
+	                );
+	            }
+	        }
+
+	        connectWebViewJavascriptBridge(function(bridge) {
+	            bridge.init(function(message, responseCallback) {
+	                var data = {
+	                    'Javascript Responds': 'yo!'
+	                };
+
+	                if (responseCallback) {
+	                    responseCallback(data);
+	                }
+	            });
+
+	            bridge.registerHandler("functionInJs", function(data, responseCallback) {
+	                log("data from Java: = " + data);
+	                if (responseCallback) {
+	                    var responseData = "Javascript Says Right back atcha!";
+	                    responseCallback(responseData);
+	                }
+	            });
+	        });
+	    }
+
+	    getPlatform();
+
+	</script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+	<script src="https://cdn.swyr.tv/common/media/js/validate.js"></script>
+
+    <script type="text/javascript">
+    	//$("#reg").validate();
+    </script>
+
+
+    <script type="text/javascript">
+
+    	function getSwatch(pos, imgID){
+
+	    	var img = document.createElement('img');
+	    	img.crossOrigin = "Anonymous";
+			img.setAttribute('src', cdn_url+'/'+imgID+'-pub/_thumb_small.jpg');
+
+			img.addEventListener('load', function (){
+
+				var vibrant = new Vibrant(img);
+				var swatches = vibrant.swatches();
+
+			    for (var swatch in swatches){
+
+			        if (swatches.hasOwnProperty(swatch) && swatches[swatch]){
+			            
+			            var c = swatches[swatch].getHex();
+
+						addCSSRule(style.sheet,'.bg_'+imgID,"background-color:"+c+";", 0);
+			        }
+			    }
+			});
+		}
+
+    </script>
+
+</body>
+</html>
+
+<!-- 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=1920, initial-scale=1.0, maximum-scale=1.0">
+  
+    <title>Tizen Web IDE - Tizen - Tizen basic Application</title>
+
+
+    
+</head>
+<body>
+
+ <video id='video' width='700' height='400' 
+   poster='yourPosterURI' src='https://media.w3.org/2010/05/bunny/movie.mp4' 
+   controls style='background:black' muted autoplay>
+ </video>
+</body>
+
+</html>
+-->
